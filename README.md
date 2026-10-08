@@ -1,8 +1,8 @@
-# Mechatronics Systems Design: Coursework, Dynamic Modeling & Case Studies
-### MATLAB/Simulink Powertrain Simulations, IMU Sensor Fusion & V-Model System Design
+# Mechatronics Systems Design: MATLAB & LabVIEW Simulations
+### Powertrain Dynamic Modeling, Actuator Feedback Control & LabVIEW State Machine Access Systems
 
-**Course:** ME561 - Mechatronics Systems Design and Interfacing  
-**Instructor:** Dr. Ghaith Al-refai  
+**Course:** ME561 / ME0562 – Mechatronics Systems Design and Interfacing  
+**Instructor:** Dr. Ghaith Al-refai / Eng. Ghaith Alshishani  
 **Department:** Department of Mechatronics & Artificial Intelligence Engineering  
 **Institution:** German Jordanian University (GJU)
 
@@ -10,29 +10,48 @@
 
 ## Overview
 
-This repository contains the advanced coursework assignments, dynamic system simulations, and engineering case studies completed for **ME561: Mechatronics Systems Design and Interfacing**. The curriculum focuses on cyber-physical systems engineering, multidisciplinary MATLAB/Simulink modeling, sensor interfacing, and formal requirements-driven engineering.
+This repository contains the simulation projects and virtual instrument models completed for **Mechatronics Systems Design and Interfacing**. It focuses strictly on computational and virtual engineering environments:
+
+1. **MATLAB / Simulink:** Longitudinal electric vehicle powertrain dynamics, motor look-up tables, and closed-loop electromechanical actuator stability.
+2. **National Instruments LabVIEW:** Event-driven finite state machine (FSM) simulating a digital password lock and electronic door access security system.
 
 ---
 
-## Key Modules & Projects
+## 1. MATLAB & Simulink Simulations (`simulink/`)
 
-### 1. Electric Vehicle (EV) Longitudinal Powertrain Dynamics (`simulink/EV_HW.slx`, `Acceleration.slx`, `Torque_Function.mat`)
-- **Physics Modeling:** Implements longitudinal vehicle dynamics incorporating aerodynamic drag ($F_{aero} = \frac{1}{2}\rho C_d A v^2$), rolling resistance ($F_{roll} = C_{rr} m g \cos\theta$), gradient resistance ($F_{grade} = m g \sin\theta$), and rotational inertia coefficients.
-- **Electric Motor Modeling:** Integrates a realistic electric motor torque-speed envelope using look-up tables (`Torque_Function.mat`) reflecting constant-torque and field-weakening constant-power operational regions.
-- **Acceleration Simulation:** Computes 0–100 km/h acceleration trajectories, torque delivery at the drive wheels through final drive gearing, and energy consumption under dynamic driving profiles.
+### Electric Vehicle (EV) Powertrain Dynamics (`EV_HW.slx`, `Acceleration.slx`, `Torque_Function.mat`)
+* **Physical Road Load Model:** Computes longitudinal vehicle forces including aerodynamic drag ($F_{\text{aero}} = \frac{1}{2}\rho C_d A v^2$), rolling resistance ($F_{\text{roll}} = C_{rr} m g \cos\theta$), and road grade resistance.
+* **Electric Motor Characteristic:** Integrates a realistic motor torque-speed curve via MATLAB LUT (`Torque_Function.mat`) modeling constant-torque and field-weakening constant-power envelopes.
+* **Transient Acceleration:** Simulates 0–100 km/h acceleration times, final-drive wheel torque delivery, and drive-cycle energy consumption.
 
-### 2. Multi-Domain Dynamic Simulations (`simulink/HW2.slx`, `HW3.slx`, `MSD_HW.slx`)
-- Time-domain transient response analysis (rise time, peak overshoot, settling time) of mixed electromechanical actuators.
-- Control loop design, motor drive interfacing (PWM, H-Bridge drivers), and feedback stability analysis.
+### Electromechanical Dynamics & Feedback Stability (`HW2.slx`, `HW3.slx`, `MSD_HW.slx`)
+* **Time-Domain Response:** Step and impulse responses of electromechanical actuators (DC motor drive, mechanical inertia, viscous damping).
+* **Feedback Control Loop:** Closed-loop position/speed regulation, H-bridge driver PWM interfacing, and system settling time analysis.
 
-### 3. IMU Calibration & Sensor Fusion Case Study (`case-studies/IMU_Case_Study.pdf`)
-- In-depth investigation of 6-DOF Inertial Measurement Units (accelerometers and MEMS gyroscopes).
-- Evaluates sensor error characteristics: bias instability, random walk noise, temperature drift, and g-sensitivity.
-- Analyzes orientation tracking algorithms (complementary filter vs. Kalman filter) to compensate for integration drift and dynamic motion artifacts.
+---
 
-### 4. Smart Automated Trash Bin V-Model Design (`case-studies/Smart_Trash_Bin_V-Model.pdf`)
-- Complete systems engineering design following the **V-Model development process**.
-- Decomposes stakeholder operational needs into functional subsystem requirements, finite state machines (idle $\to$ approach detection $\to$ lid opening $\to$ fill-level monitoring $\to$ latch/lock), and verification test matrices.
+## 2. LabVIEW Password Lock & Access Control (`labview/`)
+
+### Architecture & Finite State Machine (FSM)
+Implemented in LabVIEW as an event-driven state machine managing digital security, credential comparison, and actuator output signals:
+
+```
+ [ Initialization ] ──── Reset password registers, set default locked state
+         │
+ [ Wait for Input ] ──── Event-driven polling of keypad digits
+         │
+ [ Validate Code  ] ──── Dynamic array comparison against programmed access code
+       ├── Correct? ──> [ Open Door (Access Granted) ] ──> Timed unlock pulse
+       └── Incorrect? ─> [ Alarm / Lockout ] ───────────> Error state & attempt lockout
+         │
+ [ Save & Display ] ──── Updates user interface status indicators and event logs
+```
+
+### Files & Virtual Instruments
+* **`My_Method_Password_Lock.vi`:** Custom LabVIEW implementation of the password entry and state-transition evaluation logic.
+* **`Door_Access_System.vi`:** Complete interactive door security simulation including user keypad front panel, digital indicators, and timed unlock triggers.
+* **`State_Machine_Architecture.pdf`:** State transition diagram outlining the operational states.
+* **`Door_Access_System_Solved.exe`:** Standalone compiled executable allowing direct testing on Windows without requiring full LabVIEW runtime installation.
 
 ---
 
@@ -46,8 +65,18 @@ This repository contains the advanced coursework assignments, dynamic system sim
 │   ├── HW2.slx                   # Dynamic response simulation
 │   ├── HW3.slx                   # Feedback loop simulation
 │   └── MSD_HW.slx                # Electromechanical system model
-├── case-studies/
-│   ├── IMU_Case_Study.pdf        # IMU calibration and error compensation study
-│   └── Smart_Trash_Bin_V-Model.pdf # Systems engineering V-model design report
+├── labview/
+│   ├── My_Method_Password_Lock.vi     # Custom LabVIEW password lock logic
+│   ├── Door_Access_System.vi          # Interactive door access front panel & diagram
+│   ├── State_Machine_Architecture.pdf # State machine specification diagram
+│   └── Door_Access_System_Solved.exe  # Standalone compiled executable
+├── .gitignore
 └── README.md
 ```
+
+---
+
+## How to Run
+
+* **Simulink Models:** Open in MATLAB (R2021a or newer). Ensure `Torque_Function.mat` is loaded into the MATLAB workspace before executing `Acceleration.slx`.
+* **LabVIEW Simulations:** Open `.vi` files using NI LabVIEW (2020 or newer). Alternatively, launch `Door_Access_System_Solved.exe` directly on Windows for standalone evaluation.
