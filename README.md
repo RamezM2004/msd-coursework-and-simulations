@@ -1,5 +1,5 @@
-# Mechatronics Systems Design: MATLAB & LabVIEW Simulations
-### Powertrain Dynamic Modeling, Actuator Feedback Control & LabVIEW State Machine Access Systems
+# Mechatronics Systems Design: MATLAB, LabVIEW, and Vision-Triggered Access Systems
+### Powertrain Dynamic Modeling, Actuator Feedback Control, V-Model Design, and LabVIEW State Machines
 
 **Course:** ME561 / ME0562 – Mechatronics Systems Design and Interfacing  
 **Instructor:** Dr. Ghaith Al-refai / Eng. Ghaith Alshishani  
@@ -14,6 +14,7 @@ This repository contains the simulation projects and virtual instrument models c
 
 1. **MATLAB / Simulink:** Longitudinal electric vehicle powertrain dynamics, motor look-up tables, and closed-loop electromechanical actuator stability.
 2. **National Instruments LabVIEW:** Event-driven finite state machine (FSM) simulating a digital password lock and electronic door access security system.
+3. **Vision-triggered access control:** MediaPipe/OpenCV gesture recognition, serial/UART triggering, and V-Model documentation for a contactless access-control concept.
 
 ---
 
@@ -55,6 +56,16 @@ Implemented in LabVIEW as an event-driven state machine managing digital securit
 
 ---
 
+## 3. Vision Trigger & Gesture Access Control (`vision-trigger/`)
+
+This module contains the MediaPipe/UART files that belong to the Mechatronics Systems Design access-control work rather than the Machine Intelligence II coursework.
+
+* **`uart_wait_trigger.py`:** Serial trigger script for deterministic microcontroller communication.
+* **`hand_landmarker.task`:** MediaPipe model asset used for hand landmark detection.
+* **Use case:** Contactless gesture/password workflow that can be connected to the broader V-Model access-control architecture.
+
+---
+
 ## Repository Structure
 
 ```text
@@ -70,6 +81,9 @@ Implemented in LabVIEW as an event-driven state machine managing digital securit
 │   ├── Door_Access_System.vi          # Interactive door access front panel & diagram
 │   ├── State_Machine_Architecture.pdf # State machine specification diagram
 │   └── Door_Access_System_Solved.exe  # Standalone compiled executable
+├── vision-trigger/
+│   ├── uart_wait_trigger.py           # Serial trigger helper
+│   └── hand_landmarker.task           # MediaPipe hand landmark model
 ├── .gitignore
 └── README.md
 ```
@@ -80,3 +94,4 @@ Implemented in LabVIEW as an event-driven state machine managing digital securit
 
 * **Simulink Models:** Open in MATLAB (R2021a or newer). Ensure `Torque_Function.mat` is loaded into the MATLAB workspace before executing `Acceleration.slx`.
 * **LabVIEW Simulations:** Open `.vi` files using NI LabVIEW (2020 or newer). Alternatively, launch `Door_Access_System_Solved.exe` directly on Windows for standalone evaluation.
+* **GitHub Preview:** GitHub cannot preview `.slx`, `.vi`, `.mat`, `.task`, or `.exe` files. Download them and use MATLAB/Simulink, NI LabVIEW, the MediaPipe runtime, or Windows as appropriate. The included PDF and this README describe the work for browser-only review.
